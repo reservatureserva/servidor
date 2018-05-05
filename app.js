@@ -7,9 +7,7 @@ const server = require('http').createServer(app);
 
 app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({extended: true, limit: "10mb"}));
-app.use(bodyParser({
-    uploadDir:"./img/"}
-    ));
+
 app.use(cookieParser());
 
 

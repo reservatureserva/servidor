@@ -1,17 +1,23 @@
+var utils = require("../utils/utils");
+var model = require("../models/user-model");
+
 var userCo = (function() {
-	var model = require("../models/user-model.js");
 	var profile = (email)=>{
 
 	};
 
 	var register = (form, next)=>{
+		
+		//identificador unico basado en su dni
+		var id = utils.encode64(form.dni);
 		form.fecha_registro = (new Date).getTime();
+
 		//identificador de la imagen que se guardará en el servidor
 		if(form.foto_perfil != ""){
-			utils.savePicture(form.foto_perfil.split(',')[1], form.dni);
+			form.foto_perfil = utils.savePicture(form.foto_perfil.split(',')[1], id, "users");
 		}
-		var idFotoPerfil = form.dni.concat(form.fecha_registro);
-		model.insert();
+
+		model.insert(form, id, next);
 	};
 
 	var update = (form)=>{

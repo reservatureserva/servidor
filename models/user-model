@@ -1,4 +1,46 @@
+var cliente = require('./elastic-client');
 var userModel = (function(){
+
+	var getProfile = (identificador, next)=>{
+		var params = {
+			index 	: 	"usuarios",
+			type	: 	"usuarios",
+			id 		: 	identificador
+		};
+
+		cliente.get(params, function(error, response) {
+			if(error){
+				return next(utils.errors(response.status));
+			}
+			console.log("**************** GET USER ****************");
+			console.log(response);
+			return next(response);
+		});
+
+	};
+
+	var insert = (form, identificador, next)=>{
+		var params = {
+			index 	: 	"usuarios",
+			type	: 	"usuarios",
+			id 		: 	identificador,
+			body	: 	form
+
+		};
+
+		cliente.create(params, function(error, response) {
+			if(error){
+				return next(utils.errors(response.status));
+			}
+			return getProfile(response._id, next);
+		});
+
+	};
+
+	return{
+		insert		: 		insert,
+		getProfile	: 		getProfile
+	};
 
 })();
 
