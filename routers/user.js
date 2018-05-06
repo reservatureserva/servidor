@@ -4,8 +4,10 @@ const router =  require('express').Router();
 var userCo = require("../controllers/user-controller");
 
 router.post("/profile", function(req, resp) {
-	userCo.profile(req.body.email);
-	resp.json([{name: "Patata"}])
+	userCo.profile(req.body.email, function(user) {
+		resp.json(user);
+		
+	});
 });
 
 router.post("/register", function(req, resp) {

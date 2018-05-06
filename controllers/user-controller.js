@@ -2,8 +2,8 @@ var utils = require("../utils/utils");
 var model = require("../models/user-model");
 
 var userCo = (function() {
-	var profile = (email)=>{
-
+	var profile = (email, next)=>{
+		model.getProfileByEmail(email, next);
 	};
 
 	var register = (form, next)=>{

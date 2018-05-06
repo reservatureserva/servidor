@@ -7,6 +7,11 @@ router.get("/categorias", function(req, resp) {
 
 });
 
+router.get("/", function(req, resp) {
+	console.log(req.query);
+	resp.send("OK img!");
+});
+
 router.post("/search", function(req, resp) {
 	resp.send("OK!");
 
@@ -15,6 +20,8 @@ router.post("/search", function(req, resp) {
 router.post("/calendar", function(req, resp) {
 	console.log(req.query.oferta);
 });
+
+
 
 
 

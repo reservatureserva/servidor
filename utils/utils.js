@@ -29,6 +29,9 @@ var utils = (function() {
 			mensaje : "Ha ocurrido un problema"
 		};
 		switch(errorCode){
+			case 0	:
+			feedBack.mensaje = "Este usuario no consta en la base de datos";
+			break;
 			case 409 :
 			feedBack.mensaje = "Este usuario ya está registrado";
 			break;

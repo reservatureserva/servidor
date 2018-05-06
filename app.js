@@ -21,6 +21,7 @@ app.use('/api/*', function (req, res, next) {
 });
 
 //todo create  mock endpionts
+app.use('/img', require("./routers/img"));
 app.use('/api', require("./routers/shared"));
 app.use('/api/user', require("./routers/user"));
 app.use('/api/business', require("./routers/business"));
