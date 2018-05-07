@@ -4,8 +4,16 @@ var utils = require('../utils/utils');
 var userModel = (function(){
 
 	var userBean = (response)=>{
-		response.hits.hits[0]._source.id = response.hits.hits[0]._id;
-		return response.hits.hits[0]._source;
+		//viene de getProfileByEmail
+		if(response.hits){
+			response.hits.hits[0]._source.id = response.hits.hits[0]._id;
+			return response.hits.hits[0]._source;
+
+		}else{
+			//viene de getProfileById
+			response._source.id = response._id;
+			return response._source;
+		}
 	};
 
 	var getProfileById = (identificador, next)=>{
@@ -74,6 +82,20 @@ var userModel = (function(){
 			console.log("[user-model] - insert ("+JSON.stringify(form)+", "+identificador+")");
 			return getProfileById(response._id, next);
 		});
+	};
+
+	var remove = (identificador, next)=>{
+		var params = {
+			index 	: 	"usuarios",
+			type	: 	"usuarios",
+			id 		: 	identificador
+		};
+		elastic.delete(params, function(error, response) {
+			if(error){
+
+			}
+			return next();
+		})
 
 	};
 
