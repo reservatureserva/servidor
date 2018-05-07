@@ -32,7 +32,20 @@ var businessCo = (function() {
 
 	};
 
-	var createOffer = (offer)=>{
+	var createOffer = (offer, next)=>{
+		var id = utils.encode64(offer.titulo);
+		offer.cancelado = false;
+		
+		var urls = [];
+		//identificador de la imagen que se guardará en el servidor
+		if(offer.imagenes !== ""){
+			for(var index = 0; index < offer.imagenes.length; index++){
+				urls.push(utils.savePicture(offer.imagenes[index].split(',')[1], id + "_"+index, "offers"));
+			}
+			offer.imagenes = urls;
+		}
+
+		model.insertOffer(offer, id,next);
 
 	};
 

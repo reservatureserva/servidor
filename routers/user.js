@@ -5,8 +5,7 @@ var userCo = require("../controllers/user-controller");
 
 router.post("/profile", function(req, resp) {
 	userCo.profile(req.body.email, function(user) {
-		resp.json(user);
-		
+		resp.json(user);		
 	});
 });
 

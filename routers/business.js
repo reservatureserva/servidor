@@ -4,14 +4,15 @@ const router =  require('express').Router();
 var businessCo = require("../controllers/business-controller");
 
 router.post("/profile", function(req, resp) {
-	businessCo.profile(req.body.email);
-	resp.json([{name: "Patata"}])
+	businessCo.profile(req.body.email, function(business) {
+		resp.json(business);
+	});
 });
 
 router.post("/register", function(req, resp) {
-	console.log(req.body);
-	businessCo.register(req.body);
-	resp.json({name: "Patata"})
+	businessCo.register(req.body.email, function(business) {
+		resp.json(business);
+	});
 });
 
 
@@ -35,9 +36,9 @@ router.post("/booking", function(req, resp) {
 });
 
 router.post("/createOffer", function(req, resp) {
-	console.log(req.body);
-	businessCo.createOffer(req.body);
-	resp.json({name: "Patata"})
+	businessCo.createOffer(req.body.email, function(id){
+		resp.json(id);
+	});
 });
 
 router.post("/createCalendar", function(req, resp) {

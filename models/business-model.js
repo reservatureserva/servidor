@@ -77,10 +77,28 @@ var businessModel = (function(){
 
 	};
 
+	var createOffer = (offer, identificador, next)=>{
+		var params = {
+			index 	: 	"ofertas",
+			type	: 	"ofertas",
+			id 		: 	identificador,
+			body	: 	form
+		};
+
+		elastic.create(params, function(error, response) {
+			if(error){
+				return next(utils.errors(response.status));
+			}
+			console.log("[business-model] - createOffer ("+JSON.stringify(offer)+", "+identificador+")");
+			return next(response._id);
+		});
+	};
+
 	return{
 		insert				: 		insert,
 		getProfileById 		: 		getProfileById,
-		getProfileByEmail 	: 		getProfileByEmail
+		getProfileByEmail 	: 		getProfileByEmail,
+		createOffer			: 		createOffer
 	};
 
 })();
