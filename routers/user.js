@@ -11,7 +11,7 @@ router.post("/profile", function(req, resp) {
 });
 
 router.post("/register", function(req, resp) {
-	//console.log(req.body);
+	console.log(req.body);
 	userCo.register(req.body, function(user) {
 		resp.json(user);
 	});
