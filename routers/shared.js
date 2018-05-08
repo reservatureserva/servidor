@@ -3,7 +3,9 @@ const router =  require('express').Router();
 var controller = require("../controllers/shared-controller");
 
 router.get("/categorias", function(req, resp) {
-	resp.send("OK!");
+	controller.getCategories(function(cat) {
+		resp.json(cat);
+	});
 
 });
 
@@ -13,7 +15,9 @@ router.get("/", function(req, resp) {
 });
 
 router.post("/search", function(req, resp) {
-	resp.send("OK!");
+	controller.search(req.body, function(search) {
+		resp.json(search);
+	});
 
 });
 
