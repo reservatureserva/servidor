@@ -31,8 +31,9 @@ router.delete("/delete", function(req, resp) {
 
 router.post("/booking", function(req, resp) {
 	console.log(req.body);
-	businessCo.bookings(req.body);
-	resp.json({name: "Patata"})
+	userCo.bookings(req.body, function(business) {
+		resp.json(business);		
+	});
 });
 
 router.post("/createOffer", function(req, resp) {

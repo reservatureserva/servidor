@@ -2,7 +2,7 @@ var elastic = require('./elastic-client');
 var utils = require('../utils/utils');
 
 var userModel = (function(){
-
+	
 	var userBean = (response)=>{
 		//viene de getProfileByEmail
 		if(response.hits){

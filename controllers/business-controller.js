@@ -29,7 +29,7 @@ var businessCo = (function() {
 	};
 
 	var bookings = (id)=>{
-
+		model.getBookingByBusiness(json, next);	
 	};
 
 	var createOffer = (offer, next)=>{
