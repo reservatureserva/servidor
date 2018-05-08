@@ -28,8 +28,8 @@ var userCo = (function() {
 
 	};
 
-	var bookings = (id)=>{
-
+	var bookings = (json, next)=>{
+		model.getBookingByUser(json, next);	
 	};
 
 	var createBooking = (booking)=>{

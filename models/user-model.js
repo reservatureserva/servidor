@@ -66,6 +66,40 @@ var userModel = (function(){
 
 	};
 
+	var bookingBean = (response)=>{
+		
+		var hits = response.hits.hits;
+		var mapping = [];
+		for (var i=0; i < hits.length; i++) {
+			hits[i]._source.id = hits[i]._id; 
+			mapping.push(hits[i]._source);
+		}
+		return mapping;
+	};
+
+	var getBookingByUser = (json, next)=>{
+		var params = {
+			index 	: 	"reservas", 
+			type	: 	"reservas",
+			from	: 	json.from,
+			size	: 	json.size,
+			body	: 	{
+				query	: 	{
+					match	: 	{
+
+						cliente 	: 	json.cliente
+
+					}
+				}
+			}
+		};
+
+		elastic.search(params, function(error, response) {
+			console.log("[user-model] - getBookingByUser("+json+")");
+			return next(bookingBean(response));
+		});
+	}
+
 	var insert = (form, identificador, next)=>{
 		var params = {
 			index 	: 	"usuarios",
@@ -102,7 +136,8 @@ var userModel = (function(){
 	return{
 		insert				: 		insert,
 		getProfileById 		: 		getProfileById,
-		getProfileByEmail 	: 		getProfileByEmail
+		getProfileByEmail 	: 		getProfileByEmail,
+		getBookingByUser	: 		getBookingByUser
 	};
 
 })();

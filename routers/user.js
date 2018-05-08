@@ -33,8 +33,9 @@ router.delete("/delete", function(req, resp) {
 
 router.post("/booking", function(req, resp) {
 	console.log(req.body);
-	userCo.bookings(req.body);
-	resp.json({name: "Patata"})
+	userCo.bookings(req.body, function(user) {
+		resp.json(user);		
+	});
 });
 
 
