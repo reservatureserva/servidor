@@ -118,6 +118,29 @@ var userModel = (function(){
 		});
 	};
 
+	var update = (user, next)=>{
+		var id = user.id;
+		delete user.id;
+		console.log(user);
+		var params = {
+			index 	: 	"usuarios",
+			type	: 	"usuarios",
+			id 		: 	id,
+			body	: 	{
+				doc		: 	user
+			}
+		};
+
+		elastic.update(params, function(error, response) {
+			if(error){
+				return next(utils.errors(response.status));
+			}
+			console.log("[user-model] - update ("+JSON.stringify(user)+")");
+			return getProfileById(response._id, next);
+		});
+
+	};
+
 	var remove = (identificador, next)=>{
 		var params = {
 			index 	: 	"usuarios",
@@ -137,7 +160,9 @@ var userModel = (function(){
 		insert				: 		insert,
 		getProfileById 		: 		getProfileById,
 		getProfileByEmail 	: 		getProfileByEmail,
-		getBookingByUser	: 		getBookingByUser
+		getBookingByUser	: 		getBookingByUser,
+		update				: 		update,
+		remove 				: 		remove
 	};
 
 })();

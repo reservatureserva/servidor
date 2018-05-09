@@ -1,5 +1,5 @@
 var utils = require("../utils/utils");
-var model = require("../models/user-model");
+var model = require("../models/business-model");
 
 var businessCo = (function() {
 	var profile = (email, next)=>{
@@ -28,8 +28,8 @@ var businessCo = (function() {
 
 	};
 
-	var bookings = (id)=>{
-		model.getBookingByBusiness(json, next);	
+	var bookings = (id, next)=>{
+		model.getBookingByBusiness(id, next);	
 	};
 
 	var createOffer = (offer, next)=>{

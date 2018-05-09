@@ -33,8 +33,18 @@ var sharedModel = (function(){
 
 	};
 
+	var offersBean = (response)=>{
+		
+		var hits = response.hits.hits;
+		var mapping = [];
+		for (var i=0; i < hits.length; i++) {
+			hits[i]._source.id = hits[i]._id; 
+			mapping.push(hits[i]._source);
+		}
+		return mapping;
+	};
 	var searchOffers = (response, next)=>{
-		var params = {
+		/*var params = {
 			index 	: 	"ofertas",
 			type	: 	"ofertas",
 			from	:   response.ini,
@@ -44,12 +54,24 @@ var sharedModel = (function(){
 				query	: 	{
 					filtered	: 	{
 						multi_match	: 	{
-							"query": response., 
+							"query": response, 
 							"fields": ["titulo", "descripcion", "agencia.nombre"]
 						}
 					}
 				}
 			}*/
+		/*};*/
+		var params = {
+			index 	: 	"ofertas", 
+			type	: 	"ofertas",
+			from	: 	response.from,
+			size	: 	response.size,
+			body	: 	{
+				multi_match 	: 	{
+					"query"	: "",
+					"fields": ["titulo", "descripcion", "agencia.nombre"]
+				}
+			}
 		};
 
 		elastic.search(params, function(error, response) {
@@ -59,10 +81,10 @@ var sharedModel = (function(){
 			if(response.hits.hits.length === 0){
 				return next(utils.errors(0));
 			}
-			console.log("[user-model] - getProfileByEmail ("+email+")");
+			console.log("[shared-model] - searchOffers ("+response+")");
 
 			
-			return next(userBean(response));
+			return next(offersBean(response));
 		});
 
 	};

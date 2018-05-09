@@ -18,9 +18,9 @@ router.post("/register", function(req, resp) {
 
 
 router.put("/update", function(req, resp) {
-	console.log(req.body);
-	userCo.update(req.body);
-	resp.json({name: "Patata"})
+	userCo.update(req.body, function(user) {
+		resp.json(user)
+	});
 });
 
 

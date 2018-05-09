@@ -108,6 +108,7 @@ var businessModel = (function(){
 	};
 
 	var getBookingByBusiness = (json, next)=>{
+		console.log(json);
 		var params = {
 			index 	: 	"reservas", 
 			type	: 	"reservas",
@@ -115,11 +116,9 @@ var businessModel = (function(){
 			size	: 	json.size,
 			body	: 	{
 				query	: 	{
-					match	: 	{
-
-						cliente 	: 	json.cliente
-
-					}
+					match 	: 	{
+						"agencia.cif"	: 	json.cif 	
+					}	
 				}
 			}
 		};
@@ -134,7 +133,8 @@ var businessModel = (function(){
 		insert				: 		insert,
 		getProfileById 		: 		getProfileById,
 		getProfileByEmail 	: 		getProfileByEmail,
-		createOffer			: 		createOffer
+		createOffer			: 		createOffer,
+		getBookingByBusiness : 		getBookingByBusiness
 	};
 
 })();

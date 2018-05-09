@@ -7,21 +7,24 @@ var userCo = (function() {
 	};
 
 	var register = (form, next)=>{
-		
 		//identificador unico basado en su dni
 		var id = utils.encode64(form.dni);
 		form.fecha_registro = (new Date).getTime();
 
 		//identificador de la imagen que se guardará en el servidor
-		if(form.foto_perfil != ""){
+		if(form.foto_perfil && form.foto_perfil != ""){
 			form.foto_perfil = utils.savePicture(form.foto_perfil.split(',')[1], id, "users");
 		}
 
 		model.insert(form, id, next);
 	};
 
-	var update = (form)=>{
-
+	var update = (user, next)=>{
+		//identificador de la imagen que se guardará en el servidor
+		if(user.foto_perfil && user.foto_perfil != ""){
+			user.foto_perfil = utils.savePicture(user.foto_perfil.split(',')[1], user.id, "users");
+		}
+		model.update(user, next);
 	};
 
 	var remove = (id)=>{
