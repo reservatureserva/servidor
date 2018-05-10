@@ -10,7 +10,7 @@ var sharedCo = (function() {
 				order : "asc",
 				unit : "km",
 				mode : "min",
-				ubicacion.coord : {
+				"ubicacion\.coord" : {
 					"lat":  query.position[0],
 					"lon": 	query.position[1]
 				}
@@ -66,7 +66,7 @@ var sharedCo = (function() {
 			body.query.bool.filter = {
 		        geo_distance: {
 					distance: response.distancia,
-					ubicacion.coord: {
+					"ubicacion\.coord": {
                 		"lat":  response.position[0],
         				"lon": 	response.position[1]
         			}
