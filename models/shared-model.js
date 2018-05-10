@@ -154,7 +154,8 @@ var sharedModel = (function(){
 	};
 
 	return{
-		getCategories	: 	getCategories
+		getCategories	: 	getCategories,
+		searchOffers	: 	searchOffers
 	};
 
 })();

@@ -19,7 +19,7 @@ var sharedCo = (function() {
 		];
 
 		if(query.orden !== "DIST"){
-			var o = query.orden.toLowerCase
+			var o = query.orden.toLowerCase();
 			body.sort.unshift({
 				precio_base: {
 					order: o
@@ -65,10 +65,10 @@ var sharedCo = (function() {
 		if(query.distancia){
 			body.query.bool.filter = {
 		        geo_distance: {
-					distance: response.distancia,
+					distance: query.distancia + "km",
 					"ubicacion\.coord": {
-                		"lat":  response.position[0],
-        				"lon": 	response.position[1]
+                		"lat":  query.position[0],
+        				"lon": 	query.position[1]
         			}
 				}
 		    };

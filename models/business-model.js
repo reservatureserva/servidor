@@ -94,6 +94,22 @@ var businessModel = (function(){
 		});
 	};
 
+	var insertCalendar = (calendar, next)=>{
+		var params = {
+			index 	: 	"calendarios",
+			type	: 	"calendarios",
+			body	: 	calendar
+		};
+
+		elastic.create(params, function(error, response) {
+			if(error){
+				return next(utils.errors(response.status));
+			}
+			console.log("[business-model] - insertCalendar ("+calendar+")");
+			return next({});
+		});
+	};
+
 
 
 	var bookingBean = (response)=>{
@@ -134,6 +150,7 @@ var businessModel = (function(){
 		getProfileById 		: 		getProfileById,
 		getProfileByEmail 	: 		getProfileByEmail,
 		createOffer			: 		createOffer,
+		insertCalendar 		: 		insertCalendar,
 		getBookingByBusiness : 		getBookingByBusiness
 	};
 

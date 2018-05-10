@@ -37,15 +37,15 @@ router.post("/booking", function(req, resp) {
 });
 
 router.post("/createOffer", function(req, resp) {
-	businessCo.createOffer(req.body.email, function(id){
+	businessCo.createOffer(req.body, function(id){
 		resp.json(id);
 	});
 });
 
 router.post("/createCalendar", function(req, resp) {
-	console.log(req.body);
-	businessCo.createCalendar(req.body);
-	resp.json({name: "Patata"})
+	businessCo.createOffer(req.body, function(id){
+		resp.json(id);
+	});
 });
 
 module.exports = router;

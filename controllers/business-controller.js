@@ -49,18 +49,18 @@ var businessCo = (function() {
 
 	};
 
-	var createCalendar = (calendar)=>{
-
+	var createCalendar = (calendar, next)=>{
+		model.insertCalendar(calendar, next);
 	};
 
 	return{
-		profile		: 		profile,
-		register	: 		register,
-		update		: 		update,
-		remove		: 		remove,
-		bookings	: 		bookings,
-		createOffer : 		createOffer,
-		createCalendar : 	createCalendar
+		profile			: 		profile,
+		register		: 		register,
+		update			: 		update,
+		remove			: 		remove,
+		bookings		: 		bookings,
+		createOffer 	: 		createOffer,
+		createCalendar 	: 	createCalendar
 	};
 
 })();
