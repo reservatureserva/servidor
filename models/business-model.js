@@ -90,7 +90,7 @@ var businessModel = (function(){
 				return next(utils.errors(response.status));
 			}
 			console.log("[business-model] - createOffer ("+JSON.stringify(offer)+", "+identificador+")");
-			return next(response._id);
+			return next({id:response._id});
 		});
 	};
 
