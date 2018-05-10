@@ -38,7 +38,7 @@ var businessCo = (function() {
 		
 		var urls = [];
 		//identificador de la imagen que se guardará en el servidor
-		if(offer.imagenes !== ""){
+		if(offer.imagenes){
 			for(var index = 0; index < offer.imagenes.length; index++){
 				urls.push(utils.savePicture(offer.imagenes[index].split(',')[1], id + "_"+index, "offers"));
 			}
