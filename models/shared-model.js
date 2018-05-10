@@ -44,34 +44,67 @@ var sharedModel = (function(){
 		return mapping;
 	};
 	var searchOffers = (response, next)=>{
-		/*var params = {
-			index 	: 	"ofertas",
-			type	: 	"ofertas",
-			from	:   response.ini,
-			size	: 	response.fin,
-			sort 	: 	jsonSort
-			/*body	: 	{
-				query	: 	{
-					filtered	: 	{
-						multi_match	: 	{
-							"query": response, 
-							"fields": ["titulo", "descripcion", "agencia.nombre"]
-						}
-					}
-				}
-			}*/
-		/*};*/
 		var params = {
 			index 	: 	"ofertas", 
 			type	: 	"ofertas",
-			from	: 	response.from,
-			size	: 	response.size,
-			body	: 	{
-				multi_match 	: 	{
-					"query"	: "",
-					"fields": ["titulo", "descripcion", "agencia.nombre"]
-				}
-			}
+			from	: 	0,
+			size	: 	20,
+			body	: 	response/*{
+				sort :[
+  					{
+  						precio_base: {
+							order: response.orden
+						}
+  					},
+  					{
+            			_geo_distance : {
+            	 			order : "asc",
+                			unit : "km",
+                			mode : "min",
+                			ubicacion.coord : {
+                				"lat":  response.position[0],
+        						"lon": 	response.position[1]
+        					}
+            			}
+        			}
+  				],
+  				query: {
+    				bool: {  
+      					must : [
+      						{
+								multi_match: {
+									query: response.categoria,
+									fields: ["categoria"]
+        						}
+							},
+					      	{
+					        	multi_match: {
+									query: response.busqueda,
+									fields: ["titulo", "descripcion", "agencia.nombre"]
+					        	}
+							},
+							{
+								range:{
+									precio_base:{
+										"gte": response.precio[0],
+										"lte" : response.precio[1]
+									}
+								}
+							}
+      					],
+      
+		      			filter: {
+		        			geo_distance: {
+								distance: response.distancia,
+								ubicacion.coord: {
+                					"lat":  response.position[0],
+        							"lon": 	response.position[1]
+        						}
+							}
+		      			}
+    				}
+  				}
+			}*/
 		};
 
 		elastic.search(params, function(error, response) {
