@@ -45,7 +45,7 @@ var businessCo = (function() {
 			offer.imagenes = urls;
 		}
 
-		model.insertOffer(offer, id,next);
+		model.createOffer(offer, id,next);
 
 	};
 
