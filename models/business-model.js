@@ -82,7 +82,7 @@ var businessModel = (function(){
 			index 	: 	"ofertas",
 			type	: 	"ofertas",
 			id 		: 	identificador,
-			body	: 	form
+			body	: 	offer
 		};
 
 		elastic.create(params, function(error, response) {
