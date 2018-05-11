@@ -84,9 +84,15 @@ var sharedCo = (function() {
 		model.getCategories(next);
 	};
 
+	//recupera el json calendar segun la oferta y la semana
+	var getCalendarByOffer = (offerIdAndSemana, next)=>{
+
+	};
+
 	return{
 		search		: 		search,
-		getCategories : 	getCategories
+		getCategories : 	getCategories,
+		getCalendarByOffer : 	getCalendarByOffer
 	};
 })();
 
