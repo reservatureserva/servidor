@@ -101,9 +101,11 @@ var businessModel = (function(){
 			body	: 	calendar
 		};
 
-		elastic.create(params, function(error, response) {
+		console.log(calendar);
+
+		elastic.index(params, function(error, response) {
 			if(error){
-				return next(utils.errors(response.status));
+				return next(utils.errors("Error de calendar"));
 			}
 			console.log("[business-model] - insertCalendar ("+calendar+")");
 			return next({});

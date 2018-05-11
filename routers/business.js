@@ -43,7 +43,7 @@ router.post("/createOffer", function(req, resp) {
 });
 
 router.post("/createCalendar", function(req, resp) {
-	businessCo.createOffer(req.body, function(id){
+	businessCo.createCalendar(req.body, function(id){
 		resp.json(id);
 	});
 });
