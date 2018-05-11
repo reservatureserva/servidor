@@ -67,7 +67,6 @@ var userModel = (function(){
 	};
 
 	var bookingBean = (response)=>{
-		
 		var hits = response.hits.hits;
 		var mapping = [];
 		for (var i=0; i < hits.length; i++) {
@@ -96,6 +95,9 @@ var userModel = (function(){
 
 		elastic.search(params, function(error, response) {
 			console.log("[user-model] - getBookingByUser("+json+")");
+			if(!response.hits){
+				return next({});
+			}
 			return next(bookingBean(response));
 		});
 	}
