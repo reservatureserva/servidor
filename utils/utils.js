@@ -40,6 +40,23 @@ var utils = (function() {
 		return feedBack;
 	};
 
+	var getddMMYYYY = (epoch, dias)=>{
+		var date = new Date(epoch);
+		date.setHours(24*dias);
+
+		var dd = date.getDate();
+		var mm = date.getMonth()+1;
+
+		var yyyy = date.getFullYear();
+		if(dd<10){
+			dd='0'+dd;
+		} 
+		if(mm<10){
+			mm='0'+mm;
+		} 
+		return dd+'/'+mm+'/'+yyyy;		
+	};
+
 	return{
 		encode64 	: 	encode64,
 		decode64 	: 	decode64,

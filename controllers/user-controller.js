@@ -31,6 +31,51 @@ var userCo = (function() {
 
 	};
 
+	var availability = (weekAndOffer, next)=>{
+		var lunes = new Date(weekAndOffer.lunes); 
+		var fIni = weekAndOffer.lunes;
+		lunes.setHours(24*7);
+		lunes.setMinutes(-1);
+		var fFin = lunes.getTime();
+		var body = {
+			query : {
+				bool : {
+					must : [
+					{
+						term : {
+							oferta : weekAndOffer.oferta
+						}
+					},
+					{
+						range : {
+							fecha_inicio : {
+								gte : fIni,
+								lte : fFin
+							}
+						}
+					}
+					]
+				}
+			}
+		}
+		model.getCalendarByOffer(weekAndOffer.oferta, function(calendario) {
+			model.getAvailability(body, function(reservas) {
+				return next(buildCalendarAvailability(calendario, reservas, weekAndOffer));
+			});	
+		});
+	};
+
+	var buildCalendarAvailability = (calendario, reservas, weekAndOffer)=>{
+		var stock = calendario.total_disponible;
+		delete calendario.oferta;
+		delete calendario.total_disponible;
+		var i = 0;
+		for(var day in calendario){
+			json[day].day = utils.getddMMYYYY(weekAndOffer.fIni, i++);
+		}
+		return calendario;
+	};
+
 	var bookings = (json, next)=>{
 		model.getBookingByUser(json, next);	
 	};

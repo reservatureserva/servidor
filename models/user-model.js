@@ -66,7 +66,7 @@ var userModel = (function(){
 
 	};
 
-	var bookingBean = (response)=>{
+	var hitsBean = (response)=>{
 		var hits = response.hits.hits;
 		var mapping = [];
 		for (var i=0; i < hits.length; i++) {
@@ -85,9 +85,7 @@ var userModel = (function(){
 			body	: 	{
 				query	: 	{
 					match	: 	{
-
 						cliente 	: 	json.cliente
-
 					}
 				}
 			}
@@ -98,7 +96,7 @@ var userModel = (function(){
 			if(!response.hits){
 				return next({});
 			}
-			return next(bookingBean(response));
+			return next(hitsBean(response));
 		});
 	}
 
@@ -143,19 +141,62 @@ var userModel = (function(){
 
 	};
 
-	var remove = (identificador, next)=>{
-		var params = {
-			index 	: 	"usuarios",
-			type	: 	"usuarios",
-			id 		: 	identificador
+	var remove = (offerId, next)=>{
+		var remove = (identificador, next)=>{
+			var params = {
+				index 	: 	"usuarios",
+				type	: 	"usuarios",
+				id 		: 	identificador
+			};
+			elastic.delete(params, function(error, response) {
+				if(error){
+
+				}
+				return next();
+			})
+
 		};
-		elastic.delete(params, function(error, response) {
-			if(error){
+	};
 
+	var getCalendarByOffer = (offerId, next)=>{
+		var params = {
+			index 	: 	"calendarios",
+			type	: 	"calendarios",
+			body 	: 	{
+				query:{
+					bool:{
+						must:[{
+							term:{
+								oferta: offerId
+							}
+						}
+						]
+					}
+				}
 			}
-			return next();
-		})
+		};
+		elastic.search(params, function(error, response) {
+			console.log("[user-model] - getBookingByUser("+json+")");
+			if(!response.hits){
+				return next({});
+			}
+			return next(hitsBean(response));
+		});
+	};
 
+	var getAvailability = (query, next)=>{
+		var params = {
+			index 	: 	"calendarios",
+			type	: 	"calendarios",
+			body	: query
+		}
+
+		elastic.search(params, function(error, response) {
+			if(!response.hits){
+				return next({});
+			}
+			return next(hitsBean(response));
+		});
 	};
 
 	return{
@@ -164,7 +205,8 @@ var userModel = (function(){
 		getProfileByEmail 	: 		getProfileByEmail,
 		getBookingByUser	: 		getBookingByUser,
 		update				: 		update,
-		remove 				: 		remove
+		remove 				: 		remove,
+		getCalendarByOffer  : 		getCalendarByOffer
 	};
 
 })();

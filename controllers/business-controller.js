@@ -42,8 +42,11 @@ var businessCo = (function() {
 			for(var index = 0; index < offer.imagenes.length; index++){
 				urls.push(utils.savePicture(offer.imagenes[index].split(',')[1], id + "_"+index, "offers"));
 			}
-			offer.imagenes = urls;
+		}else{
+			urls = "/img/offers/default.png"
 		}
+
+		offer.imagenes = urls;
 
 		model.createOffer(offer, id,next);
 

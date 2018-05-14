@@ -38,6 +38,13 @@ router.post("/booking", function(req, resp) {
 	});
 });
 
+router.post("/availability", function(req, resp) {
+	console.log(req.body);
+	userCo.availability(req.body, function(calendar) {
+		resp.json(calendar);		
+	});
+});
+
 
 router.post("/createBooking", function(req, resp) {
 	console.log(req.body);
