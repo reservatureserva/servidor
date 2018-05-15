@@ -25,9 +25,9 @@ router.put("/update", function(req, resp) {
 
 
 router.delete("/delete", function(req, resp) {
-	console.log(req.body);
-	userCo.remove(req.body);
-	resp.json({name: "Patata"})
+	userCo.remove(req.body.id, function(ok) {
+		resp.json(req.body.id);
+	});
 });
 
 

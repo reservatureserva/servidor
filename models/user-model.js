@@ -141,21 +141,19 @@ var userModel = (function(){
 
 	};
 
-	var remove = (offerId, next)=>{
-		var remove = (identificador, next)=>{
-			var params = {
-				index 	: 	"usuarios",
-				type	: 	"usuarios",
-				id 		: 	identificador
-			};
-			elastic.delete(params, function(error, response) {
-				if(error){
-
-				}
-				return next();
-			})
-
+	var remove = (identificador, next)=>{
+		var params = {
+			index 	: 	"usuarios",
+			type	: 	"usuarios",
+			id 		: 	identificador
 		};
+		elastic.delete(params, function(error, response) {
+			if(error){
+				console.log("ERROR, [user-model] - remove ("+identificador+")"+JSON.stringify(error));
+			}
+			console.log("[user-model] - remove ("+identificador+")");
+			return next(response.result);
+		});
 	};
 
 	var getCalendarByOffer = (offerId, next)=>{

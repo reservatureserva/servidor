@@ -45,8 +45,7 @@ var sharedModel = (function(){
 	};
 	var searchOffers = (response, next)=>{
 		var params = {
-			index 	: 	"ofertas", 
-			type	: 	"ofertas",
+			index 	: 	"ofertas",
 			from	: 	0,
 			size	: 	20,
 			body	: 	response/*{

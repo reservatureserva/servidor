@@ -27,8 +27,8 @@ var userCo = (function() {
 		model.update(user, next);
 	};
 
-	var remove = (id)=>{
-
+	var remove = (identificador, next)=>{
+		model.remove(identificador, next);
 	};
 
 	var availability = (weekAndOffer, next)=>{
