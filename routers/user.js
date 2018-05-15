@@ -32,14 +32,12 @@ router.delete("/delete", function(req, resp) {
 
 
 router.post("/booking", function(req, resp) {
-	console.log(req.body);
 	userCo.bookings(req.body, function(user) {
 		resp.json(user);		
 	});
 });
 
 router.post("/availability", function(req, resp) {
-	console.log(req.body);
 	userCo.availability(req.body, function(calendar) {
 		resp.json(calendar);		
 	});
@@ -47,9 +45,9 @@ router.post("/availability", function(req, resp) {
 
 
 router.post("/createBooking", function(req, resp) {
-	console.log(req.body);
-	userCo.createBooking(req.body);
-	resp.json({name: "Patata"})
+	userCo.createBooking(req.body, function() {
+		resp.json({});		
+	});
 });
 
 module.exports = router;

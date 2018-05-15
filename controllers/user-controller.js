@@ -90,8 +90,8 @@ var userCo = (function() {
 		model.getBookingByUser(json, next);	
 	};
 
-	var createBooking = (booking)=>{
-
+	var createBooking = (booking, next)=>{
+		model.createBooking(booking, next);
 	};
 
 	return{

@@ -205,6 +205,20 @@ var userModel = (function(){
 		});
 	};
 
+	var createBooking = (booking, next)=> {
+		var params = {
+			index 	: 	"reservas",
+			type 	: 	"reservas",
+			body 	: 	booking
+		};
+		elastic.create(params, function(error, response) {
+			if(error){
+				return next(utils.errors(response.status));
+			}
+			console.log("[user-model] - createBooking ("+JSON.stringify(form)+")");
+			return next({});
+		});
+	}
 	return{
 		insert				: 		insert,
 		getProfileById 		: 		getProfileById,
@@ -213,7 +227,8 @@ var userModel = (function(){
 		update				: 		update,
 		remove 				: 		remove,
 		getCalendarByOffer  : 		getCalendarByOffer,
-		getAvailability 	: 		getAvailability
+		getAvailability 	: 		getAvailability,
+		createBooking 		: 		createBooking
 	};
 
 })();
