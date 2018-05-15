@@ -16,6 +16,14 @@ var userModel = (function(){
 		}
 	};
 
+	var calendarBean = (response)=>{
+		if(response.hits){
+			response.hits.hits[0]._source.id = response.hits.hits[0]._id;
+			return response.hits.hits[0]._source;
+
+		}
+	};
+
 	var getProfileById = (identificador, next)=>{
 		var params = {
 			index 	: 	"usuarios",
@@ -164,7 +172,7 @@ var userModel = (function(){
 				query:{
 					bool:{
 						must:[{
-							term:{
+							match:{
 								oferta: offerId
 							}
 						}
@@ -174,18 +182,18 @@ var userModel = (function(){
 			}
 		};
 		elastic.search(params, function(error, response) {
-			console.log("[user-model] - getBookingByUser("+json+")");
+			console.log("[user-model] - getCalendarByOffer("+offerId+")");
 			if(!response.hits){
 				return next({});
 			}
-			return next(hitsBean(response));
+			return next(calendarBean(response));
 		});
 	};
 
 	var getAvailability = (query, next)=>{
 		var params = {
-			index 	: 	"calendarios",
-			type	: 	"calendarios",
+			index 	: 	"reservas",
+			type	: 	"reservas",
 			body	: query
 		}
 
@@ -204,7 +212,8 @@ var userModel = (function(){
 		getBookingByUser	: 		getBookingByUser,
 		update				: 		update,
 		remove 				: 		remove,
-		getCalendarByOffer  : 		getCalendarByOffer
+		getCalendarByOffer  : 		getCalendarByOffer,
+		getAvailability 	: 		getAvailability
 	};
 
 })();

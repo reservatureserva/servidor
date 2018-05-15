@@ -1,6 +1,8 @@
 var utils = require("../utils/utils");
 var model = require("../models/user-model");
 
+var week = "";
+
 var userCo = (function() {
 	var profile = (email, next)=>{
 		model.getProfileByEmail(email, next);
@@ -32,7 +34,8 @@ var userCo = (function() {
 	};
 
 	var availability = (weekAndOffer, next)=>{
-		var lunes = new Date(weekAndOffer.lunes); 
+		week = weekAndOffer.lunes;
+		var lunes = new Date(parseFloat(weekAndOffer.lunes)); 
 		var fIni = weekAndOffer.lunes;
 		lunes.setHours(24*7);
 		lunes.setMinutes(-1);
@@ -59,19 +62,26 @@ var userCo = (function() {
 			}
 		}
 		model.getCalendarByOffer(weekAndOffer.oferta, function(calendario) {
-			model.getAvailability(body, function(reservas) {
-				return next(buildCalendarAvailability(calendario, reservas, weekAndOffer));
-			});	
+			if(calendario.id){
+				model.getAvailability(body, function(reservas) {
+					return next(buildCalendarAvailability(calendario, reservas));
+				});
+			}else{
+				//no se ha encontrado calendarios
+				return next({});
+			}
 		});
 	};
 
-	var buildCalendarAvailability = (calendario, reservas, weekAndOffer)=>{
+	var buildCalendarAvailability = (calendario, reservas)=>{
 		var stock = calendario.total_disponible;
+		var id = calendario.id;
 		delete calendario.oferta;
 		delete calendario.total_disponible;
+		delete calendario.id;
 		var i = 0;
 		for(var day in calendario){
-			json[day].day = utils.getddMMYYYY(weekAndOffer.fIni, i++);
+			calendario[day].day = utils.getddMMYYYY(week, i++);
 		}
 		return calendario;
 	};
@@ -90,7 +100,8 @@ var userCo = (function() {
 		update		: 		update,
 		remove		: 		remove,
 		bookings	: 		bookings,
-		createBooking : 	createBooking
+		createBooking : 	createBooking,
+		availability  : 	availability
 	};
 
 })();

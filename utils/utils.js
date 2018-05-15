@@ -41,7 +41,7 @@ var utils = (function() {
 	};
 
 	var getddMMYYYY = (epoch, dias)=>{
-		var date = new Date(epoch);
+		var date = new Date(parseFloat(epoch));
 		date.setHours(24*dias);
 
 		var dd = date.getDate();
@@ -61,7 +61,8 @@ var utils = (function() {
 		encode64 	: 	encode64,
 		decode64 	: 	decode64,
 		savePicture : 	savePicture,
-		errors		: 	errors
+		errors		: 	errors,
+		getddMMYYYY : 	getddMMYYYY
 	}
 })();
 
