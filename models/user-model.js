@@ -211,11 +211,11 @@ var userModel = (function(){
 			type 	: 	"reservas",
 			body 	: 	booking
 		};
-		elastic.create(params, function(error, response) {
+		elastic.index(params, function(error, response) {
 			if(error){
 				return next(utils.errors());
 			}
-			console.log("[user-model] - createBooking ("+JSON.stringify(form)+")");
+			console.log("[user-model] - createBooking ("+JSON.stringify(booking)+")");
 			return next({});
 		});
 	}
