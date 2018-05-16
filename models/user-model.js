@@ -87,13 +87,12 @@ var userModel = (function(){
 	var getBookingByUser = (json, next)=>{
 		var params = {
 			index 	: 	"reservas", 
-			type	: 	"reservas",
 			from	: 	json.from,
 			size	: 	json.size,
 			body	: 	{
 				query	: 	{
 					match	: 	{
-						cliente 	: 	json.cliente
+						cliente 	: 	json.id
 					}
 				}
 			}
