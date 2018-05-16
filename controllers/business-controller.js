@@ -20,7 +20,7 @@ var businessCo = (function() {
 		model.insert(form, id, next);
 	};
 
-	var update = (form, next)=>{
+	var update = (business, next)=>{
 		if(business.foto_perfil && business.foto_perfil != ""){
 			business.foto_perfil = utils.savePicture(business.foto_perfil.split(',')[1], business.id, "businesss");
 		}

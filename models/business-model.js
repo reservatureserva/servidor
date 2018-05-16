@@ -36,7 +36,6 @@ var businessModel = (function(){
 	var getProfileByEmail = (email, next)=>{
 		var params = {
 			index 	: 	"empresas",
-			type	: 	"empresas",
 			size	: 	1,
 			body	: 	{
 				query	: 	{
@@ -90,8 +89,8 @@ var businessModel = (function(){
 		delete user.id;
 		console.log(user);
 		var params = {
-			index 	: 	"usuarios",
-			type	: 	"usuarios",
+			index 	: 	"empresas",
+			type	: 	"empresas",
 			id 		: 	id,
 			body	: 	{
 				doc		: 	user
@@ -110,8 +109,8 @@ var businessModel = (function(){
 
 	var remove = (identificador, next)=>{
 		var params = {
-			index 	: 	"usuarios",
-			type	: 	"usuarios",
+			index 	: 	"empresas",
+			type	: 	"empresas",
 			id 		: 	identificador
 		};
 		elastic.delete(params, function(error, response) {
@@ -171,8 +170,7 @@ var businessModel = (function(){
 	var getBookingByBusiness = (json, next)=>{
 		console.log(json);
 		var params = {
-			index 	: 	"reservas", 
-			type	: 	"reservas",
+			index 	: 	"reservas",
 			from	: 	json.from,
 			size	: 	json.size,
 			body	: 	{
@@ -186,7 +184,11 @@ var businessModel = (function(){
 
 		elastic.search(params, function(error, response) {
 			console.log("[user-model] - getBookingByBusiness("+json+")");
-			return next(bookingBean(response));
+			if(response.hits){
+				return next(bookingBean(response));				
+			}else{
+				return next({});
+			}
 		});
 	}
 
