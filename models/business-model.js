@@ -77,6 +77,44 @@ var businessModel = (function(){
 
 	};
 
+	var update = (user, next)=>{
+		var id = user.id;
+		delete user.id;
+		console.log(user);
+		var params = {
+			index 	: 	"usuarios",
+			type	: 	"usuarios",
+			id 		: 	id,
+			body	: 	{
+				doc		: 	user
+			}
+		};
+
+		elastic.update(params, function(error, response) {
+			if(error){
+				return next(utils.errors(response.status));
+			}
+			console.log("[user-model] - update ("+JSON.stringify(user)+")");
+			return getProfileById(response._id, next);
+		});
+
+	};
+
+	var remove = (identificador, next)=>{
+		var params = {
+			index 	: 	"usuarios",
+			type	: 	"usuarios",
+			id 		: 	identificador
+		};
+		elastic.delete(params, function(error, response) {
+			if(error){
+				console.log("ERROR, [user-model] - remove ("+identificador+")"+JSON.stringify(error));
+			}
+			console.log("[user-model] - remove ("+identificador+")");
+			return next(response.result);
+		});
+	};
+
 	var createOffer = (offer, identificador, next)=>{
 		var params = {
 			index 	: 	"ofertas",
@@ -147,6 +185,8 @@ var businessModel = (function(){
 
 	return{
 		insert				: 		insert,
+		update 				: 		update,
+		remove 				: 		remove,
 		getProfileById 		: 		getProfileById,
 		getProfileByEmail 	: 		getProfileByEmail,
 		createOffer			: 		createOffer,
