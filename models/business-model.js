@@ -4,8 +4,16 @@ var utils = require('../utils/utils');
 var businessModel = (function(){
 
 	var businessBean = (response)=>{
-		response.hits.hits[0]._source.id = response.hits.hits[0]._id;
-		return response.hits.hits[0]._source;
+		//viene de getProfileByEmail
+		if(response.hits){
+			response.hits.hits[0]._source.id = response.hits.hits[0]._id;
+			return response.hits.hits[0]._source;
+
+		}else{
+			//viene de getProfileById
+			response._source.id = response._id;
+			return response._source;
+		}
 	};
 
 	var getProfileById = (identificador, next)=>{
@@ -150,8 +158,7 @@ var businessModel = (function(){
 
 
 
-	var bookingBean = (response)=>{
-		
+	var bookingBean = (response)=>{		
 		var hits = response.hits.hits;
 		var mapping = [];
 		for (var i=0; i < hits.length; i++) {
@@ -171,7 +178,7 @@ var businessModel = (function(){
 			body	: 	{
 				query	: 	{
 					match 	: 	{
-						"agencia.cif"	: 	json.cif 	
+						"agencia.cif"	: 	json.id 	
 					}	
 				}
 			}

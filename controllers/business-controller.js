@@ -13,8 +13,8 @@ var businessCo = (function() {
 		form.fecha_registro = (new Date).getTime();
 
 		//identificador de la imagen que se guardará en el servidor
-		if(form.logo != ""){
-			form.logo = utils.savePicture(form.logo.split(',')[1], id, "business");
+		if(form.foto_perfil){
+			form.foto_perfil = utils.savePicture(form.foto_perfil.split(',')[1], id, "business");
 		}
 
 		model.insert(form, id, next);

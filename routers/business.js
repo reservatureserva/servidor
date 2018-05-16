@@ -10,7 +10,7 @@ router.post("/profile", function(req, resp) {
 });
 
 router.post("/register", function(req, resp) {
-	businessCo.register(req.body.email, function(business) {
+	businessCo.register(req.body, function(business) {
 		resp.json(business);
 	});
 });
