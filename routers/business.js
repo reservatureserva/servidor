@@ -17,16 +17,16 @@ router.post("/register", function(req, resp) {
 
 
 router.put("/update", function(req, resp) {
-	console.log(req.body);
-	businessCo.update(req.body);
-	resp.json({name: "Patata"})
+	businessCo.update(req.body, function(business) {
+		resp.json(business)
+	});
 });
 
 
 router.delete("/delete", function(req, resp) {
-	console.log(req.body);
-	businessCo.remove(req.body.email);
-	resp.json({name: "Patata"})
+	businessCo.remove(req.body.id, function(ok) {
+		resp.json(req.body.id);
+	});
 });
 
 router.post("/booking", function(req, resp) {

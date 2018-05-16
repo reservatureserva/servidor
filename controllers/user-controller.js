@@ -95,13 +95,13 @@ var userCo = (function() {
 	};
 
 	return{
-		profile		: 		profile,
-		register	: 		register,
-		update		: 		update,
-		remove		: 		remove,
-		bookings	: 		bookings,
-		createBooking : 	createBooking,
-		availability  : 	availability
+		profile			: 		profile,
+		register		: 		register,
+		update			: 		update,
+		remove			: 		remove,
+		bookings		: 		bookings,
+		createBooking 	: 		createBooking,
+		availability  	: 		availability
 	};
 
 })();

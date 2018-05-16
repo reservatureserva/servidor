@@ -101,8 +101,6 @@ var businessModel = (function(){
 			body	: 	calendar
 		};
 
-		console.log(calendar);
-
 		elastic.index(params, function(error, response) {
 			if(error){
 				return next(utils.errors("Error de calendar"));

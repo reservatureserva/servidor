@@ -20,16 +20,19 @@ var businessCo = (function() {
 		model.insert(form, id, next);
 	};
 
-	var update = (form)=>{
-
+	var update = (form, next)=>{
+		if(business.foto_perfil && business.foto_perfil != ""){
+			business.foto_perfil = utils.savePicture(business.foto_perfil.split(',')[1], business.id, "businesss");
+		}
+		model.update(business, next);
 	};
 
-	var remove = (id)=>{
-
+	var remove = (id, next)=>{
+		model.remove(id, next);
 	};
 
-	var bookings = (id, next)=>{
-		model.getBookingByBusiness(id, next);	
+	var bookings = (json, next)=>{
+		model.getBookingByBusiness(json, next);	
 	};
 
 	var createOffer = (offer, next)=>{
@@ -63,7 +66,7 @@ var businessCo = (function() {
 		remove			: 		remove,
 		bookings		: 		bookings,
 		createOffer 	: 		createOffer,
-		createCalendar 	: 	createCalendar
+		createCalendar 	: 		createCalendar
 	};
 
 })();
